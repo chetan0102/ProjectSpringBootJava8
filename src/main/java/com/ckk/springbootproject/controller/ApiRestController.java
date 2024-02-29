@@ -1,14 +1,14 @@
 package com.ckk.springbootproject.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ckk.springbootproject.models.Subject;
+import com.ckk.springbootproject.models.Student;
 import com.ckk.springbootproject.services.ApiServices;
 
 @RestController
@@ -17,16 +17,41 @@ public class ApiRestController {
 	@Autowired
 	private ApiServices apiServices;
 
-	@GetMapping("/get-student/")
-	public HashMap<String	, List<Subject>> findStudent() {
-		
-		HashMap<String	, List<Subject>> map= new HashMap();
+	@GetMapping("/get-allstudent/")
+	public List<Student> findStudent() {
 
-	apiServices.AllStudents().stream().forEach(stu -> { map.computeIfAbsent(stu.getName(), x -> new ArrayList<Subject>()).add(stu.getSubjects());
-		  });
-	return map;
-		
+		return apiServices.allStudents();
+	}
 
+	@GetMapping("/searchname/{cr}")
+	public List getsearchname(@PathVariable CharSequence cr) {
+
+		return apiServices.getStuBasedonCha(cr);
+	}
+
+	@GetMapping("/get-ListBasedonSalayRange/{s}/{e}/")
+	public List ListBasedonSalayRange(@PathVariable int s, @PathVariable int e) {
+
+		return apiServices.getBasedonSalayRange(s, e);
+	}
+	
+	@GetMapping("/get-maxsalary/")
+	public Optional<Student> maxsalary() {
+
+		return apiServices.maxSalary();
+	}
+	
+	@GetMapping("/get-minsalary/")
+	public Optional<Student> minsalary() {
+
+		return apiServices.minSalary();
+	}
+	
+	@GetMapping("/get-salayIncrement/{i}")
+	public List<Float> salayIncrementList(@PathVariable float i) {
+		System.out.println(i);
+
+		return apiServices.salayIncrementList(i);
 	}
 
 }

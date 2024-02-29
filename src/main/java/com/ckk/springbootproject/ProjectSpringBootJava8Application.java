@@ -8,7 +8,8 @@ public class ProjectSpringBootJava8Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProjectSpringBootJava8Application.class, args);
-		System.out.println("ggggggggggggg");
+		System.out.println("Running App");
+
 	}
 
 }
